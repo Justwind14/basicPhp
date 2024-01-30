@@ -198,15 +198,16 @@ $transcription = [
 
 /**
  * Функция перевода буквы русского алфавита английскими буквами
- * @param $transcription - массив, представляющий русский алфавит по ключи, и его английское написание по значению
- * @param $aLetter - буква русского алфавита
+ * @param array $transcription - массив, представляющий русский алфавит по ключи, и его английское написание по значению
+ * @param string $aLetter - буква русского алфавита
  * @return void
  */
-function transliterationLetterFromRuToEng ($transcription, $aLetter) {
+function transliterationLetterFromRuToEng (array $transcription, string $aLetter) : void {
     echo (array_key_exists($aLetter, $transcription)) ? "\n" . $aLetter . " по англицки пишется как " . $transcription[$aLetter]
         : "такой буквы в русском алфавите нет!\n";
 }
 
+// вызываем функцию транслитерации
 transliterationLetterFromRuToEng($transcription, 'и');
 transliterationLetterFromRuToEng($transcription, 'ь');
 
