@@ -202,7 +202,8 @@ $transcription = [
  * @param string $aLetter - буква русского алфавита
  * @return void
  */
-function transliterationLetterFromRuToEng (array $transcription, string $aLetter) : void {
+function transliterationLetterFromRuToEng(array $transcription, string $aLetter): void
+{
     echo (array_key_exists($aLetter, $transcription)) ? "\n" . $aLetter . " по англицки пишется как " . $transcription[$aLetter]
         : "такой буквы в русском алфавите нет!\n";
 }
@@ -210,4 +211,67 @@ function transliterationLetterFromRuToEng (array $transcription, string $aLetter
 // вызываем функцию транслитерации
 transliterationLetterFromRuToEng($transcription, 'и');
 transliterationLetterFromRuToEng($transcription, 'ь');
+
+echo "\n-------------------------------------------------------------------";
+/*
+ * Задание 6.
+ * Написать функцию, которая вычисляет текущее время и возвращает его в формате с правильными склонениями, например:
+    22 часа 15 минут
+    21 час 43 минуты.
+ */
+echo "\nЗадание 6.\n";
+
+// вызываем нашу функцию вывода текущего времени
+echo showTime();
+
+/**
+ * Функция выводит в консоль сообщение, показывающее текущее время
+ * @return string
+ */
+function showTime(): string
+{
+    // рассчитываем текущее время
+    $today = time();
+    // вытаскиваем количество часов из текущего времени и рассчитываем правильное их склонение
+    $hours = hoursPrintChanger(date("H", $today), $today);
+    // вытаскиваем количество минут из текущего времени и рассчитываем правильное их склонение
+    $minutes = minutesPrintChanger(date("i", $today), $today);
+    return "Текущее время - " . $hours . $minutes;
+}
+
+/**
+ * Функция подбирает правильное склонение к выводу минут текущег овремени
+ * @param string $hours - количество часов, взятых из текущего времени в момент вызова метода time()
+ * @param int $today - переменная хранит значение текущего времени в момент вызова метода time()
+ * @return string
+ */
+function hoursPrintChanger(string $hours, int $today): string
+{
+    if ($hours == 1 || $hours == 21) {
+        return date("H час ", $today);
+    } elseif (($hours > 1 && $hours < 5) || ($hours > 21)) {
+        return date("H часа ", $today);
+    }
+    return date("H часов ", $today);
+}
+
+/**
+ * Функция подбирает правильное склонение к выводу часов текущег овремени
+ * @param string $minutes - количество часов, взятых из текущего времени в момент вызова метода time()
+ * @param int $today - переменная хранит значение текущего времени в момент вызова метода time()
+ * @return string
+ */
+function minutesPrintChanger(string $minutes, int $today): string
+{
+    if ($minutes == 1 || $minutes == 21 || $minutes == 31 || $minutes == 41 || $minutes == 51) {
+        return date("i минута", $today);
+    } elseif (($minutes > 1 && $minutes < 5) || ($minutes > 21 && $minutes < 25) || ($minutes > 31 && $minutes < 35)
+        || ($minutes > 41 && $minutes < 45) || ($minutes > 51 && $minutes < 55)) {
+        return date("i минуты", $today);
+    }
+    return date("i минут", $today);
+}
+
+
+
 
